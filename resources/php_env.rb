@@ -4,6 +4,8 @@ property :cli_package,  String, name_property: true
 property :config_file,  String
 property :config_path,  String
 property :php_options,  Hash
+# local variables
+options_hash = node['cog_php']['php_ini'].merge! php_options
 
 action :create do
   php_package cli_package do
@@ -17,9 +19,7 @@ action :create do
     owner       'root'
     group       'root'
     mode        00644
-    variables(
-      :php_options => node['cog_php']['php_ini'].merge! php_options
-    )
+    variables(  :php_options => options_hash )
   end
 end
 
