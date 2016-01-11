@@ -1,4 +1,4 @@
-#Amazon Linux php.ini adjustments to defaults
+#Amazon Linux php.ini adjustments to compiled defaults
 default['cog_php']['php_ini'] =
 {
   'display_errors' => 'Off',

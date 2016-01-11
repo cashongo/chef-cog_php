@@ -17,7 +17,7 @@ property :max_spare_servers,  String
 property :max_requests,       String
 property :pm_status_path,     String
 property :ping_path,          String
-property :php_options,        Hash
+property :pool_options,        Hash
 
 action :create do
   php_package fpm_package do
@@ -26,11 +26,12 @@ action :create do
   end
 
   template config_file do
-    path      config_path
-    source    'php-fpm_pool.conf.erb'
-    owner     'root'
-    group     'root'
-    mode      00644
+    path        config_path + config_file
+    source      'php-fpm_pool.conf.erb'
+    cookbook    'cog_php'
+    owner       'root'
+    group       'root'
+    mode        00644
     variables(
       :pool_name            => pool_name,
       :listen               => listen,
@@ -47,7 +48,7 @@ action :create do
       :pm_status_path       => pm_status_path,
       :ping_path            => ping_path,
       :ping_response        => ping_response,
-      :php_options          => php_options
+      :pool_options          => pool_options
     )
     notifies :restart, "service[#{service_name}]"
   end
