@@ -17,10 +17,7 @@ property :max_spare_servers,  String
 property :max_requests,       String
 property :pm_status_path,     String
 property :ping_path,          String
-property :flags,              Hash
-property :values,             Hash
-property :admin_values,       Hash
-property :admin_flags,        Hash
+property :php_options,        Hash
 
 action :create do
   php_package fpm_package do
@@ -50,11 +47,7 @@ action :create do
       :pm_status_path       => pm_status_path,
       :ping_path            => ping_path,
       :ping_response        => ping_response,
-      :flags                => flags,
-      :values               => values,
-      :admin_values         => admin_values,
-      :admin_flags          => admin_flags,
-      :php_options          => flags, values, admin_values, admin_flags
+      :php_options          => php_options
     )
     notifies :restart, "service[#{service_name}]"
   end

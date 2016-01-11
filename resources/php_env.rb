@@ -19,7 +19,7 @@ action :create do
     owner       'root'
     group       'root'
     mode        00644
-    variables(  :php_options => options_hash )
+    variables(  :php_options => php_options )
   end
 end
 
