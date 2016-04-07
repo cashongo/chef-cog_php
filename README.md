@@ -6,11 +6,17 @@ Chef custom resource to manage php environments
 
 - Amazon linux
 
+# Important attributes
+## cookbook
+
+- `default['cog_php']['webtatic-php7'] = false`
+
 ## Usage
 
 ### php_env
 - use to install basic php package and configure php.ini
 
+```
     php_env 'php-package' do
       config_path '/path/to/configuration-directory'
       config_file     'name-of-config-file'
@@ -19,11 +25,13 @@ Chef custom resource to manage php environments
                                                   # to avoid php parsing errors
       action :create, :remove
     end
+```
 
 ### php_fpm_pool
 - use to install php-fpm package and configure pool configuration
 - TODO: should include global php-fpm configuration
 
+```
     php_fpm_pool 'pool-name' do
       config_path       '/path/to/configuration-directory'
       config_file       'name-of-config-file'
@@ -47,11 +55,25 @@ Chef custom resource to manage php environments
                                                   # to avoid php parsing errors
       action            :create, :remove
     end
-
+```
 
 ### php_module
 
-- use to install basic php package and configure php.ini
+- use to install php extensions and configure their configuration files
+
+```
+    php_module 'module-name' do
+      config_path '/path/to/configuration-directory' # defaults to /etc/php.d/
+      config_file 'name-of-config-file'
+      php_options { 'key' => 'value' } # set values with stringified double
+                                       # quotes, i.e. '"value"' to avoid php
+                                       # parsing errors
+                                       # if present, overwrites default
+                                       # configuration file to 'php-package' in
+                                       # 'config_path'
+      action :create, :remove
+    end
+```
 
 ### php_package
 

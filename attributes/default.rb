@@ -1,9 +1,10 @@
-#Amazon Linux php.ini adjustments to compiled defaults
-default['cog_php']['php_ini'] =
-{
+# Amazon Linux php.ini adjustments to compiled defaults
+default['cog_php']['webtatic-php7'] = false
+
+default['cog_php']['php_ini'] = {
   'display_errors' => 'Off',
   'enable_dl' => 'Off',
-  'error_reporting' => 22527,
+  'error_reporting' => 22_527,
   'log_errors' => 'On',
   'mail.add_x_header' => 'On',
   'request_order' => 'GP',

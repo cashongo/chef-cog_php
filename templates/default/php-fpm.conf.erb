@@ -3,11 +3,11 @@
 
 include = <%= "#{node['peachy_frontend']['php-fpm']['pool_conf_dir']}/*.conf" %>
 
-[global]
+
 pid                             = <%= node['peachy_frontend']['php-fpm']['pid'] %>
 error_log                       = <%= node['peachy_frontend']['php-fpm']['error_log'] %>
 log_level                       = <%= node['peachy_frontend']['php-fpm']['log_level'] %>
-emergency_restart_threshold     = <%= node['peachy_frontend']['php-fpm']['emergency_restart_threshold'] %>
-emergency_restart_interval      = <%= node['peachy_frontend']['php-fpm']['emergency_restart_interval'] %>
+emergency_restart_threshold     = 0
+emergency_restart_interval      = 0
 process_control_timeout         = <%= node['peachy_frontend']['php-fpm']['process_control_timeout'] %>
 daemonize                       = yes
