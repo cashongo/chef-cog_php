@@ -3,7 +3,7 @@ resource_name :php_module
 property :module_name, String, name_property: true
 property :config_file, String, default: @module_name
 property :config_path, String, default: '/etc/php.d'
-property :module_options, Hash
+property :module_options, Hash, default: {}
 
 action :create do
   php_package module_name do
