@@ -1,13 +1,14 @@
 ; File maintained by chef
 ; MANUAL CHANGES WILL BE IGNORED
 
-include = <%= "#{node['peachy_frontend']['php-fpm']['pool_conf_dir']}/*.conf" %>
+include = <%= @pool_config_directory %>/*.conf
 
+[global]
+pid = <%= @pid %>
+error_log = <%= @error_log %>
+log_level = <%= @log_level %>
+daemonize = <%= @daemonize %>
 
-pid                             = <%= node['peachy_frontend']['php-fpm']['pid'] %>
-error_log                       = <%= node['peachy_frontend']['php-fpm']['error_log'] %>
-log_level                       = <%= node['peachy_frontend']['php-fpm']['log_level'] %>
-emergency_restart_threshold     = 0
-emergency_restart_interval      = 0
-process_control_timeout         = <%= node['peachy_frontend']['php-fpm']['process_control_timeout'] %>
-daemonize                       = yes
+<% @fpm_options.each do |name,value| -%>
+<%= "#{name} = #{value}" %>
+<% end -%>

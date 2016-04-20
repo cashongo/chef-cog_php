@@ -1,12 +1,13 @@
 resource_name :php_fpm_pool
 
 property :pool_name, String, name_property: true
-property :config_file, String, default: "/etc/php-fpm.d/#{@pool_name}"
+property :config_file, String, required: true
+property :pool_config_directory, String, default: '/etc/php-fpm.d'
 property :service_name, String, default: 'php-fpm'
-property :process_manager, String, defaul: 'ondemand'
-property :user, String
-property :group, String
-property :listen, String, default: "/var/run/php-fpm-#{@pool_name}.sock"
+property :process_manager, String, default: 'ondemand'
+property :pool_user, String
+property :pool_group, String
+property :listen, String
 property :allowed_clients, String
 property :max_children, Integer, default: 5
 property :start_servers, Integer, default: 1
@@ -21,17 +22,17 @@ property :pool_options, Hash
 
 action :create do
   template config_file do
-    path config_file
+    path( pool_config_directory + '/' + config_file )
     source 'php-fpm_pool.conf.erb'
     cookbook 'cog_php'
     owner 'root'
     group 'root'
     mode 00644
-    variables(
+    variables({
       pool_name: pool_name,
       process_manager: process_manager,
-      user: user,
-      group: group,
+      pool_user: pool_user,
+      pool_group: pool_group,
       listen: listen,
       allowed_clients: allowed_clients,
       max_children: max_children,
@@ -44,7 +45,7 @@ action :create do
       ping_response: ping_response,
       catch_workers_output: catch_workers_output,
       pool_options: pool_options
-    )
+    })
     notifies :restart, "service[#{service_name}]"
   end
 
@@ -57,10 +58,5 @@ action :remove do
   file config_file do
     path config_file
     action :delete
-  end
-
-  php_package fpm_package do
-    php_package_options '--enablerepo=webtatic' if node['cog_php']['webtatic-php7'] == true
-    action :install
   end
 end

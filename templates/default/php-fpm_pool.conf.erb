@@ -2,8 +2,8 @@
 ; MANUAL CHANGES WILL BE IGNORED
 
 [<%= @pool_name %>]
-user                    = <%= @user  %>
-group                   = <%= @group  %>
+user                    = <%= @pool_user %>
+group                   = <%= @pool_group %>
 listen                  = <%= @listen %>
 listen.allowed_clients  = <%= @allowed_clients ? ([@allowed_clients].flatten.join(',')) : "127.0.0.1" %>
 pm                      = <%= @process_manager %>
