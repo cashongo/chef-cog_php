@@ -22,13 +22,13 @@ property :pool_options, Hash
 
 action :create do
   template config_file do
-    path( pool_config_directory + '/' + config_file )
+    path(pool_config_directory + '/' + config_file)
     source 'php-fpm_pool.conf.erb'
     cookbook 'cog_php'
     owner 'root'
     group 'root'
     mode 00644
-    variables({
+    variables(
       pool_name: pool_name,
       process_manager: process_manager,
       pool_user: pool_user,
@@ -45,7 +45,7 @@ action :create do
       ping_response: ping_response,
       catch_workers_output: catch_workers_output,
       pool_options: pool_options
-    })
+    )
     notifies :restart, "service[#{service_name}]"
   end
 
