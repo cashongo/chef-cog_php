@@ -56,7 +56,7 @@ end
 
 action :remove do
   file config_file do
-    path config_file
+    path(pool_config_directory + '/' + config_file)
     action :delete
   end
 end
