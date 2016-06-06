@@ -7,7 +7,7 @@ property :module_options, Hash, default: {}
 
 action :create do
   php_package module_name do
-    php_package_options '--enablerepo=webtatic' if node['cog_php']['webtatic-php7'] == true
+    php_package_options '--enablerepo=webtatic' if node['cog_php']['webtatic-php7']
     action :install
   end
 
@@ -27,13 +27,13 @@ end
 action :remove do
   unless module_options.empty?
     file config_file do
-      path config_path
+      path( config_path + '/' + config_file )
       action :delete
     end
   end
 
   php_package module_name do
-    php_package_options '--enablerepo=webtatic' if node['cog_php']['webtatic-php7'] == true
+    php_package_options '--enablerepo=webtatic' if node['cog_php']['webtatic-php7']
     action :remove
   end
 end

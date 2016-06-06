@@ -41,7 +41,6 @@ end
 
 action :remove do
   file fpm_config_file do
-    path config_file
     action :delete
   end
 
