@@ -4,4 +4,6 @@ maintainer_email 'andreas.wagner@cashongo.co.uk'
 license 'Apache 2.0'
 description 'LWRP for distributing deployment keys'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version '0.2.0'
+version '0.3.0'
+
+depends 'logrotate', '1.9.2'

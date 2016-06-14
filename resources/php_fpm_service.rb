@@ -11,7 +11,6 @@ property :daemonize, String, default: 'yes'
 property :fpm_options, Hash, default: {}
 
 action :create do
-
   php_package fpm_package do
     php_package_options '--enablerepo=webtatic' if node['cog_php']['webtatic-php7'] == true
     action :install
@@ -23,19 +22,26 @@ action :create do
     owner 'root'
     group 'root'
     mode 00644
-    variables({
-      pool_config_directory: pool_config_directory,
-      pid: pid,
-      error_log: error_log,
-      log_level: log_level,
-      daemonize: daemonize,
-      fpm_options: fpm_options
-    })
+    variables(pool_config_directory: pool_config_directory,
+              pid: pid,
+              error_log: error_log,
+              log_level: log_level,
+              daemonize: daemonize,
+              fpm_options: fpm_options)
     notifies :restart, "service[#{service_name}]"
   end
 
   service service_name do
     action [:enable]
+  end
+
+  logrotate_app 'php' do
+    cookbook 'logrotate'
+    path '/var/log/php-fpm/*.log'
+    options %w(missingok compress delaycompress notifempty dateext sharedscripts)
+    frequency 'daily'
+    rotate 36_500
+    postrotate ['/bin/kill -SIGUSR1 `cat /var/run/php-fpm.pid 2>/dev/null` 2>/dev/null || true']
   end
 end
 
@@ -47,5 +53,15 @@ action :remove do
   php_package fpm_package do
     php_package_options '--enablerepo=webtatic' if node['cog_php']['webtatic-php7'] == true
     action :remove
+  end
+
+  logrotate_app 'php' do
+    cookbook 'logrotate'
+    path '/var/log/php-fpm/*.log'
+    options %w(missingok compress delaycompress notifempty dateext sharedscripts)
+    frequency 'daily'
+    rotate 36_500
+    postrotate ['/bin/kill -SIGUSR1 `cat /var/run/php-fpm.pid 2>/dev/null` 2>/dev/null || true']
+    action :disable
   end
 end

@@ -13,7 +13,7 @@ action :create do
 
   unless module_options.empty?
     template config_file do
-      path( config_path + '/' + config_file )
+      path(config_path + '/' + config_file)
       source 'php_module.conf.erb'
       cookbook 'cog_php'
       owner 'root'
@@ -27,7 +27,7 @@ end
 action :remove do
   unless module_options.empty?
     file config_file do
-      path( config_path + '/' + config_file )
+      path(config_path + '/' + config_file)
       action :delete
     end
   end
