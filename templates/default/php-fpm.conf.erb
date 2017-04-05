@@ -10,5 +10,5 @@ log_level = <%= @log_level %>
 daemonize = <%= @daemonize %>
 
 <% @fpm_options.each do |name,value| -%>
-<%= "#{name} = #{value}" %>
+<%= name.to_s + ' = ' + value.to_s %>
 <% end -%>

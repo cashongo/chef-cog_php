@@ -22,5 +22,5 @@ ping.path               = <%= @ping_path %>
 ping.response           = <%= @ping_response %>
 catch_workers_output    = <%= @catch_workers_output %>
 <% @pool_options.each do |name,value| -%>
-<%= "#{name} = #{value}" %>
+<%= name.to_s + ' = ' + value.to_s %>
 <% end -%>

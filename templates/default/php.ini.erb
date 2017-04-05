@@ -2,5 +2,5 @@
 ; MANUAL CHANGES WILL BE IGNORED
 
 <% @php_options.each do |name,value| -%>
-<%= "#{name} = \"#{value}\"" %>
+<%= name.to_s + ' = ' + value.to_s %>
 <% end -%>
